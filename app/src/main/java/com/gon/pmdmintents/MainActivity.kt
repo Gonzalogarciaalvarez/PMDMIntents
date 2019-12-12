@@ -1,6 +1,7 @@
 package com.gon.pmdmintents
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -24,23 +25,26 @@ class MainActivity : AppCompatActivity() {
 
         bcalculo.setOnClickListener{
             val intento=Intent(this,calculo::class.java);
+            bcalculo.setBackgroundColor(Color.GREEN)
             startActivity(intento)
 
         }
 
         bBrowser.setOnClickListener {
             val myIntent = Intent(this, webView::class.java);
-
+            bBrowser.setBackgroundColor(Color.GREEN)
             startActivity(myIntent);
 
         }
         btncamara.setOnClickListener {
+            btncamara.setBackgroundColor(Color.GREEN)
             accamara(it)
 
         }
 
         bbuscador.setOnClickListener {
             val myIntent = Intent(this, Reto::class.java);
+            bbuscador.setBackgroundColor(Color.GREEN)
 
             startActivity(myIntent);
 
