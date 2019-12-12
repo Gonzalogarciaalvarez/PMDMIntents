@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
+    //Le damos las funciones a los distintos botones que llamaran a los retos
         bcalculo.setOnClickListener{
             val intento=Intent(this,calculo::class.java);
             startActivity(intento)
