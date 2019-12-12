@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".webView">
 
+    <Button
+        android:id="@+id/busqueda"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="zeratul"
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="339dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
