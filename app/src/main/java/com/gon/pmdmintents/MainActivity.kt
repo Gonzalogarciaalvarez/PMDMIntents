@@ -22,7 +22,8 @@ class MainActivity : AppCompatActivity() {
         longToast("Escoge en cada uno de los botones, el reto que quieras usar")
 
     //Le damos las funciones a los distintos botones que llamaran a los retos
-
+    //Y hacemos que tras pulsar cada uno de los botones, se le cambie el color a verde
+    //Para poder saber que botones ya has probado
         bcalculo.setOnClickListener{
             val intento=Intent(this,calculo::class.java);
             bcalculo.setBackgroundColor(Color.GREEN)
