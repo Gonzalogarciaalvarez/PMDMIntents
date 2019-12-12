@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activityCamera"></activity>
+        <activity android:name=".Reto"></activity>
+        <activity android:name=".activityCamera" />
         <activity android:name=".webView" />
         <activity android:name=".calculo" />
         <activity android:name=".MainActivity">

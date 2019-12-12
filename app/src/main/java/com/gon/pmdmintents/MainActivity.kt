@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.colorAttr
 import org.jetbrains.anko.longToast
 
 const val PICK_REQUEST = 1
@@ -20,9 +21,11 @@ class MainActivity : AppCompatActivity() {
         longToast("Escoge en cada uno de los botones, el reto que quieras usar")
 
     //Le damos las funciones a los distintos botones que llamaran a los retos
+
         bcalculo.setOnClickListener{
             val intento=Intent(this,calculo::class.java);
             startActivity(intento)
+
         }
 
         bBrowser.setOnClickListener {
@@ -33,7 +36,16 @@ class MainActivity : AppCompatActivity() {
         }
         btncamara.setOnClickListener {
             accamara(it)
+
         }
+
+        bbuscador.setOnClickListener {
+            val myIntent = Intent(this, Reto::class.java);
+
+            startActivity(myIntent);
+
+        }
+
 
     }
 
