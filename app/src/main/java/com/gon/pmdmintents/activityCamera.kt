@@ -1,55 +1,88 @@
 package com.gon.pmdmintents
 
-import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.view.View
-import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_camera.*
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
+
+
+const val MY_PERMISSIONS_REQUEST_CAMERA = 9;
+const val REQUEST_IMAGE_CAPTURE = 6;
+
 
 class activityCamera : AppCompatActivity() {
 
-    val CAMERA_REQUEST=3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
 
-        button_camera_take.setOnClickListener {
-            dispatchTakePictureIntent(it)
+        btnFoto.setOnClickListener{dispatchTakePictureIntent()}
+        longToast("Pulse en foto para activar la camara")
     }
 
-        private fun dispatchTakePictureIntent(y: View) {
-            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-                takePictureIntent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(takePictureIntent,CAMERA_REQUEST)
-                }
-            }
+    //SOLICITUD DE PERMISOS
+    //UNA VEZ LE DAMOS EL PERMISO, TENEMOS QUE QUITARLO PARA QUE VUELVA A PREGUNTAR POR ÉL
+    fun checkPermisoCamara() {
+
+        //HACE FALTA PONER "android" !!
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            //SI NO EXISTEN PERMISOS:
+            toast("HACE FALTA DAR PERMISO")
+
+
+            //SALTAMOS LA EXPLICACIÓN DE POR QUÉ LO NECESITAMOS Y SOLICITAMOS EL PERMISO DIRECTAMENTE
+
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.CAMERA), MY_PERMISSIONS_REQUEST_CAMERA
+            )
+
+            //SI LOS PERMISOS YA ESTÁN ACTIVOS
+        } else {
+
+
+            toast("PERMISO ACTIVO")
+
         }
 
-        fun cam(y: View){
-            val callCameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-            if (callCameraIntent.resolveActivity(packageManager) != null) {
-                startActivityForResult(callCameraIntent,CAMERA_REQUEST)
+    }
+//PARA HACER QUE SAQUE UNA FOTO Y LA MUESTRE POR PANTALLA:
+    //LA CÁMARA ES UNA ACTIVITY, POR ESO HACEMOS EL "onActivityResult"
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(packageManager)?.also {
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
             }
         }
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            when(requestCode){
-                CAMERA_REQUEST->{
-                    if(resultCode== Activity.RESULT_OK && data != null){
-                        photoimageView.setImageBitmap(data.extras?.get("data") as Bitmap)
-                    }
+    }
 
-                }
-                else ->{
-                    Toast.makeText(this,"codigo mal", Toast.LENGTH_SHORT).show()
-                }
-            }
+
+    //TRAS SACAR LA FOTO, SE LLAMARÁ A ESTA FUNCIÓN PARA OBTENERLA EN LA "IMAGEVIEW"
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            //EN KOTLIN, CUANDO MANEJAMOS VARIABLES QUE PUEDEN SER NULL (data en este caso),
+            //KOTLIN SIEMPRE NOS OBLIGARÁ A TRATAR ESOS VALORES QUE PUEDEN SER NULL DE ALGUNA MANERA
+            //(por ej, con un "if" que controle si la variable es null o no (if...else...))
+            //SI DE ALGUNA MANERA SABEMOS QUE ESA VARIABLE NO VA A SER NULL NUNCA, PODEMOS USAR EL OPERADOR "!!"
+
+            val imageBitmap = data!!.extras!!.get("data") as Bitmap
+            image.setImageBitmap(imageBitmap)
         }
+    }
 
 }
+

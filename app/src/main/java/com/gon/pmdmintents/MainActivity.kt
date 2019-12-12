@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.longToast
 
 const val PICK_REQUEST = 1
 const val CAMERA_REQUEST = 3
@@ -15,6 +16,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        longToast("Escoge en cada uno de los botones, el reto que quieras usar")
 
     //Le damos las funciones a los distintos botones que llamaran a los retos
         bcalculo.setOnClickListener{

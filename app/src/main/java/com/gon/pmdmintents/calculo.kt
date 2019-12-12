@@ -4,12 +4,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import kotlinx.android.synthetic.main.activity_calculo.*
+import org.jetbrains.anko.longToast
 
 class calculo : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calculo)
+
+        longToast("Introduce los valores con los que quieras operar y escoge en los botones inferiores que operacion quieres realizar")
+
 
 
         // Botón para hacer la suma
